@@ -1,0 +1,45 @@
+body {
+  background-color: #1a1a2e;
+  background-image: radial-gradient(circle, #ffffff22 1px, transparent 1px);
+  background-size: 30px 30px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 40px;
+  text-align: center;
+  padding: 30px;
+}
+
+h2 {
+  color: #00d4ff;
+  font-size: 28px;
+  padding: 10px 0;
+}
+
+p {
+  color: #cccccc;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+ul {
+  color: #cccccc;
+  font-size: 18px;
+  line-height: 2;
+}
+
+a {
+  color: #00d4ff;
+  font-size: 18px;
+}
+
+#cat {
+  background-color: #0f3460;
+  color: white;
+  padding: 30px;
+  margin: 50px 0;
+  border: 2px solid #00d4ff;
+  border-radius: 8px;
+}
