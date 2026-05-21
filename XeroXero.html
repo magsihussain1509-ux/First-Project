@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XEROFEM — Built Different</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0e8;
+      --accent: #c8ff00;
+      --mid: #1a1a1a;
+      --gray: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ====== NAVBAR ====== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--black) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; color: var(--black) !important; }
+
+    /* ====== HERO ====== */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28vw;
+      color: rgba(255,255,255,0.025);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+      -webkit-text-stroke: 0px;
+    }
+
+    .hero-title .outline {
+      -webkit-text-stroke: 1px var(--white);
+      color: transparent;
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--gray);
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--black);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ====== SECTION SHARED ====== */
+    section {
+      padding: 7rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 0 4rem;
+    }
+
+    /* ====== MARQUEE ====== */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 1.5rem 0;
+      background: var(--accent);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 18s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ====== PRODUCTS ====== */
+    #products .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .product-card {
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      background: #1f1f1f;
+    }
+
+    /* Placeholder product images using CSS */
+    .product-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.15);
+      background: #111;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.015) 40px,
+        rgba(255,255,255,0.015) 41px
+      );
+    }
+
+    .product-placeholder .icon {
+      font-size: 3rem;
+      opacity: 0.2;
+    }
+
+    .badge-new {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: var(--black);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 3px 10px;
+      text-transform: uppercase;
+    }
+
+    .product-info {
+      padding: 1.2rem 1.4rem;
+    }
+
+    .product-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-sub {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-bottom: 0.8rem;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .product-price .original {
+      font-size: 0.8rem;
+      color: var(--gray);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-right: 0.4rem;
+    }
+
+    /* ====== ABOUT ====== */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat-box {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1rem;
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--gray);
+      letter-spacing: 0.05em;
+      margin-top: 0.2rem;
+    }
+
+    .about-visual {
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px;
+      aspect-ratio: 4/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: rgba(200,255,0,0.08);
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-visual::after {
+      content: 'XF';
+      position: absolute;
+      font-size: 18rem;
+      color: rgba(200,255,0,0.04);
+      pointer-events: none;
+    }
+
+    /* ====== PRICING ====== */
+    #pricing .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      transition: border-color 0.3s;
+      position: relative;
+    }
+
+    .pricing-card:hover { border-color: rgba(200,255,0,0.4); }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: rgba(200,255,0,0.03);
+    }
+
+    .plan-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.2rem;
+    }
+
+    .plan-tag.accent { color: var(--accent); }
+
+    .plan-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .plan-price sup { font-size: 1.2rem; vertical-align: super; }
+
+    .plan-note {
+      font-size: 0.75rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .plan-features li {
+      font-size: 0.88rem;
+      color: rgba(245,240,232,0.75);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .plan-features li::before {
+      content: '—';
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      padding: 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .plan-btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+
+    .plan-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .plan-btn-solid {
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    .plan-btn-solid:hover { opacity: 0.85; }
+
+    /* ====== REVIEWS ====== */
+    #reviews .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .review-card {
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+
+    .star { color: var(--accent); font-size: 0.9rem; }
+
+    .review-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.75);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(200,255,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .author-name {
+      font-weight: 500;
+      font-size: 0.88rem;
+    }
+
+    .author-sub {
+      font-size: 0.75rem;
+      color: var(--gray);
+    }
+
+    /* ====== CONTACT ====== */
+    #contact {
+      background: var(--mid);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    #contact .inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--gray);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-top: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .contact-row span:first-child {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .contact-row span:last-child {
+      font-size: 0.9rem;
+      color: rgba(245,240,232,0.8);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--accent); }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+
+    .form-submit:hover { opacity: 0.85; }
+
+    /* ====== FOOTER ====== */
+    footer {
+      padding: 3rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.78rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ====== ACTIVE NAV ====== */
+    .nav-links a.active { color: var(--white); }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 5rem 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      #contact .inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+      .hero-title { font-size: clamp(3.5rem, 14vw, 5rem); }
+      #home { padding: 7rem 1.5rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#home" class="logo">XEROF<span>.</span>EM</a>
+    <ul class="nav-links">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg-text">XF</div>
+    <p class="hero-tag">New Drop — SS 2025 Collection</p>
+    <h1 class="hero-title">
+      BUILT<br/>
+      <span class="outline">DIFFER</span><em>ENT</em>
+    </h1>
+    <p class="hero-desc">
+      Premium gym wear engineered for performance and obsessed with fit. T-shirts and trousers that move the way you do — no compromises.
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop Now</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>FREE SHIPPING OVER $80</span>
+      <span>★</span>
+      <span>XEROFEM — SS 2025</span>
+      <span>★</span>
+      <span>PREMIUM GYM WEAR</span>
+      <span>★</span>
+      <span>BUILT DIFFERENT</span>
+      <span>★</span>
+      <span>FREE RETURNS 30 DAYS</span>
+      <span>★</span>
+      <span>NEW DROP — LIMITED STOCK</span>
+      <span>★</span>
+      <span>FREE SHIPPING OVER $80</span>
+      <span>★</span>
+      <span>XEROFEM — SS 2025</span>
+      <span>★</span>
+      <span>PREMIUM GYM WEAR</span>
+      <span>★</span>
+      <span>BUILT DIFFERENT</span>
+      <span>★</span>
+      <span>FREE RETURNS 30 DAYS</span>
+      <span>★</span>
+      <span>NEW DROP — LIMITED STOCK</span>
+      <span>★</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <p class="section-label">The Collection</p>
+    <h2 class="section-title">Shop Xerofem</h2>
+
+    <div class="products-grid">
+
+      <!-- T-SHIRT 1 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div class="badge-new">New</div>
+          <div style="font-size:5rem;opacity:0.15;">👕</div>
+          <div>OVERSIZED TEE</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Phantom Tee — Black</div>
+          <div class="product-sub">Oversized fit / 100% Cotton / SS25</div>
+          <div class="product-price">$49.00</div>
+        </div>
+      </div>
+
+      <!-- T-SHIRT 2 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div style="font-size:5rem;opacity:0.15;">👕</div>
+          <div>COMPRESSION TEE</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Zero Compression Tee</div>
+          <div class="product-sub">Slim fit / Poly-blend / All Seasons</div>
+          <div class="product-price">
+            <span class="original">$55.00</span>$39.00
+          </div>
+        </div>
+      </div>
+
+      <!-- T-SHIRT 3 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div class="badge-new">New</div>
+          <div style="font-size:5rem;opacity:0.15;">👕</div>
+          <div>CROPPED TEE</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Femme Crop Tee — White</div>
+          <div class="product-sub">Cropped fit / 100% Cotton / SS25</div>
+          <div class="product-price">$44.00</div>
+        </div>
+      </div>
+
+      <!-- TROUSERS 1 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div class="badge-new">Drop</div>
+          <div style="font-size:5rem;opacity:0.15;">👖</div>
+          <div>TRACK PANT</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Core Track Pant — Black</div>
+          <div class="product-sub">Tapered / Moisture-wicking / SS25</div>
+          <div class="product-price">$79.00</div>
+        </div>
+      </div>
+
+      <!-- TROUSERS 2 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div style="font-size:5rem;opacity:0.15;">👖</div>
+          <div>JOGGER</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">X-Jogger — Slate</div>
+          <div class="product-sub">Relaxed fit / Fleece lining / Winter</div>
+          <div class="product-price">
+            <span class="original">$89.00</span>$69.00
+          </div>
+        </div>
+      </div>
+
+      <!-- TROUSERS 3 -->
+      <div class="product-card">
+        <div class="product-placeholder">
+          <div class="badge-new">New</div>
+          <div style="font-size:5rem;opacity:0.15;">👖</div>
+          <div>SWEAT PANT</div>
+        </div>
+        <div class="product-info">
+          <div class="product-name">Phantom Sweats — Olive</div>
+          <div class="product-sub">Wide leg / French terry / SS25</div>
+          <div class="product-price">$85.00</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div>
+      <p class="section-label">Who We Are</p>
+      <h2 class="section-title">Gym Wear That Doesn't Apologize</h2>
+      <p style="color:var(--gray);line-height:1.8;font-size:0.95rem;">
+        Xerofem was born in a garage gym by two people who were sick of paying luxury prices for mid-tier performance. We build every piece to outlast the competition — in and out of the gym. No fluff. No filler. Just quality.
+      </p>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-number">14K+</div>
+          <div class="stat-label">Customers Worldwide</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Positive Reviews</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">30</div>
+          <div class="stat-label">Day Free Returns</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">3YR</div>
+          <div class="stat-label">In Business</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">XEROFEM</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <p class="section-label">Membership Bundles</p>
+    <h2 class="section-title">Pick Your Pack</h2>
+    <p style="color:var(--gray);font-size:0.9rem;max-width:500px;line-height:1.7;">
+      Save more when you commit to the fit. Our bundles give you free shipping, early drops, and exclusive member pricing.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="plan-tag">Starter</p>
+        <h3 class="plan-name">Solo</h3>
+        <div class="plan-price"><sup>$</sup>0</div>
+        <p class="plan-note">No commitment, just shop</p>
+        <ul class="plan-features">
+          <li>Standard pricing</li>
+          <li>Free shipping over $80</li>
+          <li>30-day returns</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#contact" class="plan-btn plan-btn-outline">Start Free</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <p class="plan-tag accent">Most Popular</p>
+        <h3 class="plan-name">Member</h3>
+        <div class="plan-price"><sup>$</sup>12<span style="font-size:1rem;font-weight:400;color:var(--gray)">/mo</span></div>
+        <p class="plan-note">Billed monthly, cancel anytime</p>
+        <ul class="plan-features">
+          <li>10% off all orders</li>
+          <li>Always free shipping</li>
+          <li>Early access to drops</li>
+          <li>Priority support</li>
+          <li>Exclusive colourways</li>
+        </ul>
+        <a href="#contact" class="plan-btn plan-btn-solid">Join Now</a>
+      </div>
+
+      <div class="pricing-card">
+        <p class="plan-tag">Best Value</p>
+        <h3 class="plan-name">Elite</h3>
+        <div class="plan-price"><sup>$</sup>29<span style="font-size:1rem;font-weight:400;color:var(--gray)">/mo</span></div>
+        <p class="plan-note">Billed monthly, cancel anytime</p>
+        <ul class="plan-features">
+          <li>20% off all orders</li>
+          <li>Free shipping always</li>
+          <li>First access every drop</li>
+          <li>1 free item per quarter</li>
+          <li>Personal stylist chat</li>
+          <li>Co-design input</li>
+        </ul>
+        <a href="#contact" class="plan-btn plan-btn-outline">Go Elite</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <p class="section-label">Real People</p>
+    <h2 class="section-title">What They're Saying</h2>
+
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"I've tried Gymshark, Lululemon, all of them. Xerofem's Phantom Tee fits better than anything I've worn in 6 years of lifting. The fabric doesn't cling weird and it doesn't shrink."</p>
+        <div class="review-author">
+          <div class="author-avatar">MR</div>
+          <div>
+            <div class="author-name">Marcus R.</div>
+            <div class="author-sub">Verified Buyer — Chicago, IL</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"The Core Track Pants are the only trousers I wear to the gym now. The taper is perfect — not too skinny, not sloppy. And the moisture wicking actually works unlike cheaper brands."</p>
+        <div class="review-author">
+          <div class="author-avatar">SP</div>
+          <div>
+            <div class="author-name">Sana P.</div>
+            <div class="author-sub">Verified Buyer — London, UK</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"Ordered the bundle pack on a Friday, had it by Tuesday. Quality is stupid good for the price. Already bought two more tees. The brand is real — not just hype."</p>
+        <div class="review-author">
+          <div class="author-avatar">JO</div>
+          <div>
+            <div class="author-name">Jordan O.</div>
+            <div class="author-sub">Verified Buyer — Toronto, CA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star" style="color:var(--gray)">★</span>
+        </div>
+        <p class="review-text">"The Femme Crop Tee runs slightly small so size up, but the quality is legitimately amazing. Gets compliments every single session. Would be 5 stars if the sizing info was clearer."</p>
+        <div class="review-author">
+          <div class="author-avatar">AL</div>
+          <div>
+            <div class="author-name">Aisha L.</div>
+            <div class="author-sub">Verified Buyer — Dubai, UAE</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"Member plan is 100% worth it. The early access to drops alone paid for itself twice over. Plus 10% off every order adds up fast if you're buying regularly."</p>
+        <div class="review-author">
+          <div class="author-avatar">TK</div>
+          <div>
+            <div class="author-name">Theo K.</div>
+            <div class="author-sub">Member — Amsterdam, NL</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="review-text">"Switched my whole gym wardrobe to Xerofem after trying one tee. The X-Jogger is my daily driver outside the gym too. Minimal branding, clean silhouette. These people get it."</p>
+        <div class="review-author">
+          <div class="author-avatar">DR</div>
+          <div>
+            <div class="author-name">Diego R.</div>
+            <div class="author-sub">Elite Member — Madrid, ES</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="inner">
+      <div class="contact-info">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Talk To Us</h2>
+        <p>Questions, wholesale inquiries, collab proposals — we read everything. Response time is under 24 hours.</p>
+        <div class="contact-detail">
+          <div class="contact-row">
+            <span>Email</span>
+            <span>support@xerofem.io</span>
+          </div>
+          <div class="contact-row">
+            <span>DM Us</span>
+            <span>@xerofem.io</span>
+          </div>
+          <div class="contact-row">
+            <span>Location</span>
+            <span>HQ — London, United Kingdom</span>
+          </div>
+          <div class="contact-row">
+            <span>Response Time</span>
+            <span>Within 24 hours</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Marcus"/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Reed"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select>
+            <option value="">Select a topic</option>
+            <option>Order / Shipping</option>
+            <option>Returns</option>
+            <option>Wholesale Inquiry</option>
+            <option>Collaboration</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="What's on your mind?"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+        <p id="form-confirm" style="color:var(--accent);font-size:0.85rem;display:none;">Message sent. We'll be in touch within 24 hours.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">XEROF<span>.</span>EM</div>
+    <ul class="footer-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Shop</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p>&copy; 2025 Xerofem. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+
+    // Form fake submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('form-confirm').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
